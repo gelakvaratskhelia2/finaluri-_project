@@ -11,6 +11,11 @@ def login():
         session['username'] = request.form["username"]
         return redirect(url_for("hello my new user"))
     return render_template('login.html')
+class Books(db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    title = db.Column('title', db.String(30))
+    author = db.Column('author', db.String(40))
+    price = db.Column('price', db.Integer)
 @app.route("/books", methods=['GET', 'POST'])
 def Books():
     if request.method == "POST":
@@ -23,6 +28,12 @@ def Books():
         flash("Added Successfully! ")
         return redirect(url_for("hello_world"))
     return render_template("books.html")
+
+@app.route ("/logout")
+def logout():
+    session.pop("username", None)
+    return "You have been logged out. Goodbye!"
+logout()
 
 
 if __name__ == '__main__':
